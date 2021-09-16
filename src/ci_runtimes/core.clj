@@ -46,7 +46,7 @@
           job (->> job_urls
                    (map github-api/get-jobs)
                    ;; TODO: specify which job to take from workflow run, now takes the first
-                   (map #(first %)))
+                   (map first))
           day-items (->> job
                          (filter (complement nil?))  ;; CI job not started
                          (filter filter-success)
@@ -68,9 +68,7 @@
                                                             (Math/round))
                                                  :runs (->>
                                                         (val %)
-                                                        (count))
-                                                ;;  :duration (Math/round (float (average (map :duration (val %)))))
-                                                 )))
+                                                        (count)))))
           max-duration (->> grouped-day-items
                             (map #(:duration %))
                             (apply max))
